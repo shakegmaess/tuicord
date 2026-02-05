@@ -39,3 +39,6 @@
 /home/stefany/Documents/Projects/tuicord/obj/Debug/net10.0/tuicord.pdb
 /home/stefany/Documents/Projects/tuicord/obj/Debug/net10.0/tuicord.genruntimeconfig.cache
 /home/stefany/Documents/Projects/tuicord/obj/Debug/net10.0/ref/tuicord.dll
+/home/stefany/Documents/Projects/tuicord/obj/Debug/net10.0/tuicord.sourcelink.json
+/home/stefany/Documents/Projects/tuicord/bin/Debug/net10.0/bot.token
+/home/stefany/Documents/Projects/tuicord/bin/Debug/net10.0/usr.token

@@ -11,7 +11,6 @@ namespace tcord
 {
     using Terminal.Gui;
     using Discord;
-    using DiscordHelper;
     using Discord.WebSocket;
     using System.Reactive.Linq;
     using System.Collections.ObjectModel;
@@ -24,6 +23,7 @@ namespace tcord
     using System.Buffers;
     using System.Security.Cryptography;
     using System.IO.Abstractions;
+    using System.Net.Sockets;
 
     public partial class MyView
     {
@@ -34,6 +34,7 @@ namespace tcord
         private Dictionary<string, ulong> guildDict = new Dictionary<string, ulong> { };
         private Dictionary<string, ulong> channelDict = new Dictionary<string, ulong> { };
         private ObservableCollection<string> guildNames = new ObservableCollection<string> { };
+        private string token = File.ReadAllText(AppContext.BaseDirectory + "bot.token");
         private IDisposable typingState;
         private bool typingDisposed = true;
         private string nowTime = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
@@ -63,7 +64,25 @@ namespace tcord
         {
 
             InitializeComponent();
-            Main();
+
+            token = File.ReadAllText(AppContext.BaseDirectory + "bot.token");
+
+            if (token == "")
+            {
+                discordTokenInputWindow.Visible = true;
+                okButton.Accepting += (source, e) =>
+                {
+                    discordTokenInputWindow.Visible = false;
+                    discordTokenInputWindow.Enabled = false;
+                    File.WriteAllText(AppContext.BaseDirectory + "bot.token", inputField.Text);
+                    token = File.ReadAllText(AppContext.BaseDirectory + "bot.token");
+                    Main();
+                };
+            }
+            else
+            {
+                Main();
+            }
         }
 
         private async Task Main()
@@ -75,9 +94,10 @@ namespace tcord
                    | GatewayIntents.DirectMessages
                    | GatewayIntents.MessageContent
             };
+
+
             dClient = new DiscordSocketClient(config);
             dClient.Log += log;
-            var token = File.ReadAllText(AppContext.BaseDirectory + "bot.token");
 
             await dClient.LoginAsync(TokenType.Bot, token);
             await dClient.StartAsync();
@@ -122,7 +142,7 @@ namespace tcord
             Logger.logString(guildNames.ToString(), nowTime);
             await serverList.SetSourceAsync<string>(guildNames);
 
-            discordTokenInputWindow.Visible = false;
+
         }
 
         private async Task sendMessage(string message)
@@ -150,14 +170,18 @@ namespace tcord
 
         private async Task updateChannels()
         {
-            channelListView.SetSource(new ObservableCollection<string>());
+            await channelListView.SetSourceAsync(new ObservableCollection<string> { });
+            channelDict.Clear();
             var channels = selSv.Channels.Where(c => (c is ITextChannel textCh) && ((SocketTextChannel)textCh).GetPermissionOverwrite(dClient.CurrentUser)?.ViewChannel != PermValue.Deny).ToList();
             var channelNames = new ObservableCollection<string> { };
             foreach (var channel in channels)
             {
-                channelDict.Add(channel.Name, channel.Id);
-                channelNames.Add(channel.Name);
-                Logger.logString(channel.Name, nowTime, "serverLog");
+                if (channel.ChannelType == ChannelType.Text || channel.ChannelType == ChannelType.Voice)
+                {
+                    channelDict.Add(channel.Name, channel.Id);
+                    channelNames.Add(channel.Name);
+                    Logger.logString(channel.Name, nowTime, "serverLog");
+                }
             }
             Logger.logString(channelNames.ToString(), nowTime);
             await channelListView.SetSourceAsync<string>(channelNames);

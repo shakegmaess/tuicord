@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("tuicord")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7a4b4f3ea981cbacdc228aa999f91823d0b6b289")]
 [assembly: System.Reflection.AssemblyProductAttribute("tuicord")]
 [assembly: System.Reflection.AssemblyTitleAttribute("tuicord")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

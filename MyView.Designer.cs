@@ -163,7 +163,7 @@ namespace tcord {
             this.msgBoardTexts.AllowsMultipleSelection = true;
             this.msgBoard.Add(this.msgBoardTexts);
             this.discordTokenInputWindow.Width = 50;
-            this.discordTokenInputWindow.Height = 20;
+            this.discordTokenInputWindow.Height = Dim.Percent(50);
             this.discordTokenInputWindow.X = Pos.Center();
             this.discordTokenInputWindow.Y = Pos.Center();
             this.discordTokenInputWindow.Visible = false;
@@ -177,7 +177,7 @@ namespace tcord {
             this.label.Width = Dim.Auto();
             this.label.Height = Dim.Auto();
             this.label.X = Pos.Center();
-            this.label.Y = 4;
+            this.label.Y = Pos.Center() - 2;
             this.label.Visible = false;
             this.label.Arrangement = Terminal.Gui.ViewBase.ViewArrangement.Fixed;
             this.label.CanFocus = false;
@@ -202,7 +202,7 @@ namespace tcord {
             this.okButton.Width = Dim.Auto();
             this.okButton.Height = Dim.Auto();
             this.okButton.X = Pos.Center();
-            this.okButton.Y = 13;
+            this.okButton.Y = Pos.Center() + 2;
             this.okButton.Visible = true;
             this.okButton.Arrangement = Terminal.Gui.ViewBase.ViewArrangement.Fixed;
             this.okButton.CanFocus = true;

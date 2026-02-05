@@ -10,9 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Discord.Net" Version="3.18.0" />
-	  <PackageReference Include="Terminal.Gui" Version="2.0.0-develop.4538" />
+    <PackageReference Include="Discord.Net" Version="3.18.0" />
+    <PackageReference Include="Terminal.Gui" Version="2.0.0-develop.4538" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bot.token" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="usr.token" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <None Include="README.md">
