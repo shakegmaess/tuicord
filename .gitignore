@@ -5,7 +5,7 @@ obj/
 
 logs/
 
-
+*.md
 *.token
 .env
 
