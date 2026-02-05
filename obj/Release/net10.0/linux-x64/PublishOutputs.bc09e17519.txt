@@ -1,2 +1,0 @@
-/home/stefany/Documents/Projects/tuicord/bin/Release/net10.0/linux-x64/publish/tuicord.pdb
-/home/stefany/Documents/Projects/tuicord/bin/Release/net10.0/linux-x64/publish/tuicord
