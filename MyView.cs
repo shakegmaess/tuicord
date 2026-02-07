@@ -34,7 +34,7 @@ namespace tcord
         private Dictionary<string, ulong> guildDict = new Dictionary<string, ulong> { };
         private Dictionary<string, ulong> channelDict = new Dictionary<string, ulong> { };
         private ObservableCollection<string> guildNames = new ObservableCollection<string> { };
-        private string token = File.ReadAllText(AppContext.BaseDirectory + "bot.token");
+        private string token;
         private IDisposable typingState;
         private bool typingDisposed = true;
         private string nowTime = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
@@ -65,9 +65,9 @@ namespace tcord
 
             InitializeComponent();
 
-            token = File.ReadAllText(AppContext.BaseDirectory + "bot.token");
-
-            if (token == "")
+            bool tokenExists = File.Exists(AppContext.BaseDirectory + "bot.token");
+            Logger.logString(tokenExists.ToString(), nowTime, "what22");
+            if (tokenExists == false)
             {
                 discordTokenInputWindow.Visible = true;
                 okButton.Accepting += (source, e) =>
@@ -81,6 +81,7 @@ namespace tcord
             }
             else
             {
+                token = File.ReadAllText(AppContext.BaseDirectory + "bot.token");
                 Main();
             }
         }
@@ -118,14 +119,6 @@ namespace tcord
                selCh = dClient.GetChannel(channelDict[selected.Value.ToString()]);
                await updateMessages();
            };
-
-            messageInput.TextChanged += (sender, e) =>
-            {
-                if (selCh is ITextChannel textChannel)
-                {
-                    textChannel.TriggerTypingAsync();
-                }
-            };
 
 
             messageInput.KeyDown += (object sender, Key i) =>
